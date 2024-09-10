@@ -30,7 +30,19 @@ for page in pages:
         stock_volume = tdList[6].span.text
         new_stock = [stock_name, stock_price, stock_percent_change, stock_volume]
         stocks.append(new_stock)
+#get stock link
 
 df = pd.DataFrame(stocks, columns=['Stock', 'Current Price', '%Change', '# of Shares'])
 df.to_csv('stocks.csv')
-print('Created csv!')
+print('Created csv')
+
+#operate on csv file via pandas
+#should be able to carry out operations like:
+#find top performing stock of the day (most percent up)
+#sort by price
+#sort alphabetically
+#get intrinsic price
+
+
+#first, you should get user input, maybe amount of cash they want to invest
+#give them stocks that meet their cash price, include link
