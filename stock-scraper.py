@@ -55,15 +55,24 @@ def scrape_data():
     condition = df['Current Price'] <= cash
     df_cash = df[condition] #this formats dataframe so that it only includes stocks within cash range
 
-    #print('Filter - 1. Alphabetically\n2. By Price\n3. By \%Change\n4. Number of Shares')
+    print('Filter information: \n1. Alphabetically\n2. By Price\n3. By %Change\n4. Number of Shares')
+    filter = (int)(input())
+    if(filter==1):
+        df_cash = df_cash.sort_values(by="Stock")
+    elif(filter==2):
+        df_cash = df_cash.sort_values(by="Current Price")
+    elif(filter==3):
+        df_cash = df_cash.sort_values(by="%Change")
+    else:
+        df_cash = df_cash.sort_values(by="# of Shares", ascending=False)
 
-    #should sort by number of shares so they get mainstream / large-cap companies
+    #until they quit, keep prompting them with options
+    #have a stock library for them to add for a watchlist
+
     #could also use some formatting prettiness; getting rid of numbers on the side, spacing out further
 
-    df_cash = df_cash.sort_values(by="# of Shares", ascending=False)
     print(df_cash)
 
-    #pull up the dataframe with stocks that meet their price range
     #they should be able to search for a stock; ignore their available cash
 
 
