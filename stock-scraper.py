@@ -37,7 +37,7 @@ def scrape_data():
 
     df = pd.DataFrame(stocks, columns=['Stock', 'Current Price', '%Change', '# of Shares'])
     #df.to_csv('stocks.csv')
-    print('Created csv')
+    print('Successfully scraped information.')
 
     #should be able to carry out operations like:
     #find top performing stock of the day (most percent up)
@@ -55,25 +55,38 @@ def scrape_data():
     condition = df['Current Price'] <= cash
     df_cash = df[condition] #this formats dataframe so that it only includes stocks within cash range
 
-    print('Filter information: \n1. Alphabetically\n2. By Price\n3. By %Change\n4. Number of Shares')
-    filter = (int)(input())
-    if(filter==1):
-        df_cash = df_cash.sort_values(by="Stock")
-    elif(filter==2):
-        df_cash = df_cash.sort_values(by="Current Price")
-    elif(filter==3):
-        df_cash = df_cash.sort_values(by="%Change")
-    else:
-        df_cash = df_cash.sort_values(by="# of Shares", ascending=False)
+    q = 0
+    asc = [True, True, True, False]
+    #this array makes it so that things can be sorted ascending or descending
+    #the dataframe keeps track of all the filters, but I'm trying to find a way to display them. 
+    #I'm also trying to find a way to reset them... 
+
+    while q==0:
+        print('Filter information: \n1. Alphabetically\n2. By Price\n3. By %Change\n4. Number of Shares\n5. Quit')
+        filter = (int)(input())
+        if(filter==1):
+            df_cash = df_cash.sort_values(by="Stock", ascending=asc[0])
+        elif(filter==2):
+            df_cash = df_cash.sort_values(by="Current Price", ascending = asc[1])
+        elif(filter==3):
+            df_cash = df_cash.sort_values(by="%Change", ascending = asc[2])
+        elif(filter==4):
+            df_cash = df_cash.sort_values(by="# of Shares", ascending=asc[3])
+        else:
+            q = 1
+            break
+        asc[filter-1] = not asc[filter-1]
+        print(df_cash + '\n')
+
 
     #until they quit, keep prompting them with options
-    #have a stock library for them to add for a watchlist
+    #idea: have a stock library for them to add for a watchlist
 
     #could also use some formatting prettiness; getting rid of numbers on the side, spacing out further
+    #idea: maybe add a graph
 
-    print(df_cash)
-
-    #they should be able to search for a stock; ignore their available cash
+        
+    #idea: they should be able to search for a stock; ignore their available cash
 
 
 if __name__ == '__main__':
@@ -81,3 +94,4 @@ if __name__ == '__main__':
         scrape_data()
         time.sleep(3600) 
         #scrapes hourly
+        #idea: keep it in a database; scrape daily, keep data on these stocks
